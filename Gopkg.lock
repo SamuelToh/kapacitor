@@ -1,4 +1,4 @@
-memo = "b6d6862890dc6f8392aae533152bb96f8c4974ce1617a2826c68d2aae6e2a4a5"
+memo = "666e2ce90cf26495ab8f2edb5b4242b388f767047bc9f1db102874e2a023d4c0"
 
 [[projects]]
   name = "github.com/BurntSushi/toml"
@@ -41,6 +41,12 @@ memo = "b6d6862890dc6f8392aae533152bb96f8c4974ce1617a2826c68d2aae6e2a4a5"
   name = "github.com/dustin/go-humanize"
   packages = ["."]
   revision = "259d2a102b871d17f30e3cd9881a642961a1e486"
+
+[[projects]]
+  name = "github.com/eclipse/paho.mqtt.golang"
+  packages = [".","packets"]
+  revision = "45f9b18f4864c81d49c3ed01e5faec9eeb05de31"
+  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
@@ -191,6 +197,12 @@ memo = "b6d6862890dc6f8392aae533152bb96f8c4974ce1617a2826c68d2aae6e2a4a5"
   name = "golang.org/x/crypto"
   packages = ["bcrypt","blowfish"]
   revision = "0242f07995e684be54f2a2776327141acf1cef91"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = ["websocket"]
+  revision = "da118f7b8e5954f39d0d2130ab35d4bf0e3cb344"
 
 [[projects]]
   branch = "master"

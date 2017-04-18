@@ -20,6 +20,7 @@ import (
 	"github.com/influxdata/kapacitor/services/influxdb"
 	"github.com/influxdata/kapacitor/services/k8s"
 	"github.com/influxdata/kapacitor/services/logging"
+	"github.com/influxdata/kapacitor/services/mqtt"
 	"github.com/influxdata/kapacitor/services/opsgenie"
 	"github.com/influxdata/kapacitor/services/pagerduty"
 	"github.com/influxdata/kapacitor/services/pushover"
@@ -62,6 +63,7 @@ type Config struct {
 	// Alert handlers
 	Alerta    alerta.Config    `toml:"alerta" override:"alerta"`
 	HipChat   hipchat.Config   `toml:"hipchat" override:"hipchat"`
+	MQTT      mqtt.Config      `toml:"mqtt" override:"mqtt"`
 	OpsGenie  opsgenie.Config  `toml:"opsgenie" override:"opsgenie"`
 	PagerDuty pagerduty.Config `toml:"pagerduty" override:"pagerduty"`
 	Pushover  pushover.Config  `toml:"pushover" override:"pushover"`
@@ -110,6 +112,7 @@ func NewConfig() *Config {
 
 	c.Alerta = alerta.NewConfig()
 	c.HipChat = hipchat.NewConfig()
+	c.MQTT = mqtt.NewConfig()
 	c.OpsGenie = opsgenie.NewConfig()
 	c.PagerDuty = pagerduty.NewConfig()
 	c.Pushover = pushover.NewConfig()
@@ -214,6 +217,9 @@ func (c *Config) Validate() error {
 		return err
 	}
 	if err := c.HipChat.Validate(); err != nil {
+		return err
+	}
+	if err := c.MQTT.Validate(); err != nil {
 		return err
 	}
 	if err := c.OpsGenie.Validate(); err != nil {
