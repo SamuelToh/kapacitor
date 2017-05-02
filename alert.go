@@ -17,6 +17,7 @@ import (
 	"github.com/influxdata/kapacitor/pipeline"
 	alertservice "github.com/influxdata/kapacitor/services/alert"
 	"github.com/influxdata/kapacitor/services/hipchat"
+	"github.com/influxdata/kapacitor/services/mqtt"
 	"github.com/influxdata/kapacitor/services/opsgenie"
 	"github.com/influxdata/kapacitor/services/pagerduty"
 	"github.com/influxdata/kapacitor/services/pushover"
@@ -386,6 +387,8 @@ func newAlertNode(et *ExecutingTask, n *pipeline.AlertNode, l *log.Logger) (an *
 		c := et.tm.MQTTService.DefaultHandlerConfig()
 		if m.Topic != "" {
 			c.Topic = m.Topic
+			c.QoS = mqtt.QoSLevel(m.QoS)
+			c.Retained = m.Retained
 		}
 		h := et.tm.MQTTService.Handler(c, l)
 		an.handlers = append(an.handlers, h)
