@@ -949,9 +949,10 @@ func (a *AlertaHandler) Services(service ...string) *AlertaHandler {
 
 // Send alert to an MQTT broker
 // tick:property
-func (a *AlertNode) MQTT() *MQTTHandler {
+func (a *AlertNode) Mqtt(topic string) *MQTTHandler {
 	m := &MQTTHandler{
 		AlertNode: a,
+		Topic:     topic,
 	}
 	a.MQTTHandlers = append(a.MQTTHandlers, m)
 	return m
