@@ -35,6 +35,7 @@ import (
 	"github.com/influxdata/kapacitor/services/alert/alerttest"
 	"github.com/influxdata/kapacitor/services/alerta/alertatest"
 	"github.com/influxdata/kapacitor/services/hipchat/hipchattest"
+	"github.com/influxdata/kapacitor/services/mqtt"
 	"github.com/influxdata/kapacitor/services/opsgenie"
 	"github.com/influxdata/kapacitor/services/opsgenie/opsgenietest"
 	"github.com/influxdata/kapacitor/services/pagerduty"
@@ -59,6 +60,9 @@ var udfDir string
 func init() {
 	dir, _ := os.Getwd()
 	udfDir = filepath.Clean(filepath.Join(dir, "../udf"))
+	mqtt.NewClient = func(c mqtt.Config) mqtt.Client {
+		return &mqtt.MockClient{}
+	}
 }
 
 func TestServer_Ping(t *testing.T) {
@@ -6591,6 +6595,16 @@ func TestServer_ListServiceTests(t *testing.T) {
 				Link:    client.Link{Relation: client.Self, Href: "/kapacitor/v1/service-tests/kubernetes"},
 				Name:    "kubernetes",
 				Options: nil,
+			},
+			{
+				Link: client.Link{Relation: client.Self, Href: "/kapacitor/v1/service-tests/mqtt"},
+				Name: "mqtt",
+				Options: client.ServiceTestOptions{
+					"topic":    "",
+					"message":  "test MQTT message",
+					"qos":      float64(0),
+					"retained": false,
+				},
 			},
 			{
 				Link: client.Link{Relation: client.Self, Href: "/kapacitor/v1/service-tests/opsgenie"},
